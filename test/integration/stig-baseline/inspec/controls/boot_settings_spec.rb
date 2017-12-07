@@ -1,3 +1,14 @@
+ETC_GRUB_CONFIG_FILE = attribute(
+                                 'etc_grub_config_file',
+                                 default: '/etc/grub2.cfg',
+                                 description: "The grub configuration file in /etc, which is usually linked to the real configuration file"
+)
+
+BOOT_GRUB_CONFIG_FILE = attribute(
+                                 'boot_grub_config_file',
+                                 default: '/boot/grub2/grub.cfg',
+                                 description: "The grub configuration file in /boot"
+)
 
 # CENTOS6 1.4.2
 # CENTOS6 1.4.3
@@ -16,10 +27,10 @@ end
 
 # CENTOS6: 1.4.1
 # CENTOS6: 1.5.3
-describe file('/etc/grub2.cfg') do
+describe file(ETC_GRUB_CONFIG_FILE) do
   it { should exist }
   it { should be_file }
-  it { should be_linked_to '/boot/grub2/grub.cfg' }
+  it { should be_linked_to BOOT_GRUB_CONFIG_FILE }
   its('mode') { should cmp '0600' }
   it { should be_owned_by 'root' }
   it { should be_grouped_into 'root' }
@@ -27,7 +38,7 @@ describe file('/etc/grub2.cfg') do
   its('content') { should_not include('enforcing=0') }
   its('content') { should_not include('password --md5') }
 end
-describe file('/boot/grub2/grub.cfg') do
+describe file(BOOT_GRUB_CONFIG_FILE) do
   it { should exist }
   it { should be_file }
   its('mode') { should cmp '0600' }
@@ -35,14 +46,14 @@ describe file('/boot/grub2/grub.cfg') do
   it { should be_grouped_into 'root' }
 end
 # CENTOS6: 1.5.1
-describe file("/boot/grub2/grub.cfg") do
+describe file(BOOT_GRUB_CONFIG_FILE) do
   its("gid") { should cmp 0 }
 end
-describe file("/boot/grub2/grub.cfg") do
+describe file(BOOT_GRUB_CONFIG_FILE) do
   its("uid") { should cmp 0 }
 end
 # CENTOS6: 1.5.2
-describe command('stat -L -c "%a" /etc/grub2.cfg | egrep ".00"') do
+describe command("stat -L -c \"%a\" #{ETC_GRUB_CONFIG_FILE} | egrep \".00\"") do
   its(:stdout) { should_not match /^$/ }
 end
 
@@ -67,6 +78,11 @@ control "CIS-1.4.6_Check_for_Unconfined_Daemons" do
         context of their parent process."
   impact 1.0
   processes("*").entries.each do |entry|
+    # Skip virtualbox if we are using virtualbox virtualization in Centos 6
+    next if os.redhat? && os[:release].to_i < 7 \
+    && virtualization.system == 'vbox' \
+    && entry.command == '/usr/sbin/VBoxService --pidfile /var/run/vboxadd-service.sh'
+
     describe entry do
       its("pid") { should be > 0 }
     end
@@ -80,22 +96,44 @@ control "CIS-1.4.6_Check_for_Unconfined_Daemons" do
 end
 
 # CENTOS6: 1.5.5
-describe file('/etc/sysconfig/init') do
-  it { should exist }
-  it { should be_file }
-  its('mode') { should cmp '0644' }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
+if os.redhat? && os[:release].to_i < 7
+  describe file('/etc/sysconfig/init') do
+    it { should exist }
+    it { should be_file }
+    its('mode') { should cmp '0644' }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+    its('content') { should include('PROMPT=no') }
+  end
+else
+  describe file('/etc/sysconfig/init') do
+    it { should exist }
+    it { should be_file }
+    its('mode') { should cmp '0644' }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+  end
 end
 
 # CENTOS6: 3.2
-describe file('/etc/inittab') do
-  it { should exist }
-  it { should be_file }
-  its('mode') { should cmp '0644' }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
-  its('content') { should_not include('id:3:initdefault:') }
+if os.redhat? && os[:release].to_i < 7
+  describe file('/etc/inittab') do
+    it { should exist }
+    it { should be_file }
+    its('mode') { should cmp '0644' }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+    its('content') { should include('id:3:initdefault:') }
+  end
+else
+  describe file('/etc/inittab') do
+    it { should exist }
+    it { should be_file }
+    its('mode') { should cmp '0644' }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+    its('content') { should_not include('id:3:initdefault:') }
+  end
 end
 
 # CENTOS6: 5.2.1

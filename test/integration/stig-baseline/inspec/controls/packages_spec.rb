@@ -7,7 +7,7 @@ DISABLED_PKGS = attribute(
 ENABLED_PKGS = attribute(
   'enabled_pkgs',
   default: ['tcp_wrappers'],
-  description: "The list of packages that we want to ensure are not installed"
+  description: "The list of packages that we want to ensure are installed"
 )
 
 only_if do

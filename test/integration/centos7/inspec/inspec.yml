@@ -5,3 +5,10 @@ license: Public domain
 copyright: None
 summary: Verify that the default settings are configured for CentOS 7
 version: 0.0.1
+depends:
+  - name: stig-baseline
+    path: test/integration/stig-baseline/inspec
+supports:
+  - os-family: redhat
+    release: 7.2.1511
+    release: 7.3.1611

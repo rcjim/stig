@@ -1,12 +1,25 @@
 ## Changelog
 ---------
 
-- 0.6.10
+## [Unreleased] - 2017-11-21
+### Added
+- jmorris@usgs.gov - Added attributes for aide inspec tests
+- jmorris@usgs.gov - Added attributes file for CentOS 6 testing
 
--- [jmorris@usgs.gov] - Added template for /etc/aide.conf and it updates the aide database
--- [jmorris@usgs.gov] - Added default attributes for Centos 6 & 7 for /etc/aide.conf
--- [jmorris@usgs.gov] - Added inspec and unit tests for /etc/aide.conf
--- [jmorris@usgs.gov] - Corrected inspec tests centos7 to run aide tests for redhat platforms
+### Changed
+- jmorris@usgs.gov - Moved Centos7 inspec tests to stig-baseline
+- jmorris@usgs.gov - Merged in centos6 inspec tests into stig-baseline
+- jmorris@usgs.gov - Replaced deprecated resource "auditd_rules" with "auditd" in audit_rules.rb
+- jmorris@usgs.gov - Centos 6 & 7 now include the stig-baseline tests
+- jmorris@usgs.gov - Moved from Centos 6.8 to Centos 6.9
+
+## [0.6.10] - 2017-07-18
+### Added
+- jmorris@usgs.gov - Added template for /etc/aide.conf and it updates the aide database
+- jmorris@usgs.gov - Added default attributes for Centos 6 & 7 for /etc/aide.conf
+- jmorris@usgs.gov - Added inspec and unit tests for /etc/aide.conf
+### Changed
+- jmorris@usgs.gov - Corrected inspec tests centos7 to run aide tests for redhat platforms
 
 - 0.6.9
 

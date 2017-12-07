@@ -9,13 +9,12 @@ verifier:
   name: inspec
 
 platforms:
-  - name: centos-6.8
+  - name: centos-6.9
   - name: centos-7.3
 
 suites:
   - name: centos7
-    excludes:
-      - centos-6.8
+    includes: centos-7.3
     verifier:
       inspec_tests:
           - name: centos7
@@ -52,12 +51,13 @@ suites:
     }
 
   - name: centos6
-    excludes:
-      - centos-7.3
+    includes: centos-6.9
     verifier:
       inspec_tests:
           - name: centos6
             path: test/integration/centos6/inspec
+      attrs:
+          - test/integration/centos6/inspec/attributes.yml
     run_list:
       - recipe[auditd]
       - recipe[stig::auditd]

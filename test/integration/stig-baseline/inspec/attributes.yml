@@ -7,6 +7,7 @@ pass_min_days: "7"
 pass_warn_age: "15"
 disabled_pkgs: ['dhcp']
 enabled_pkgs: ['tcp_wrappers']
+aide_config_file: /etc/aide.conf
 audit_conf_file: /etc/audit/audit.rules
 audit_pkg: audit
 audit_lines: [
@@ -56,6 +57,7 @@ audit_lines: [
   '-w /sbin/rmmod -p x -k modules',
   '-w /sbin/modprobe -p x -k modules',
   '-a always,exit arch=b64 -S init_module -S delete_module -k modules',
+  '-a always,exit -F arch=b32 -S init_module -S delete_module -k modules',
   '-b 8192',
   '-f 1',
   '-D'

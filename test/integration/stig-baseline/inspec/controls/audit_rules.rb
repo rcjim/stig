@@ -60,6 +60,7 @@ AUDIT_LINES = attribute(
     '-w /sbin/rmmod -p x -k modules',
     '-w /sbin/modprobe -p x -k modules',
     '-a always,exit arch=b64 -S init_module -S delete_module -k modules',
+    '-a always,exit -F arch=b32 -S init_module -S delete_module -k modules',
     '-b 8192',
     '-f 1',
     '-D'
@@ -82,7 +83,7 @@ end
 # The 'line' var is is wrapped in a #{} so that the reporting will output each
 # line that is tested in the results.
 AUDIT_LINES.each do |line|
-  describe auditd_rules do
+  describe auditd do
     its('lines') { should contain_match(%r{#{line}}) }
   end
 end

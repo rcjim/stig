@@ -1,0 +1,7 @@
+name: stig-baseline
+title: Baseline STIG
+maintainer: Ivan Suftin (isuftin@usgs.gov)
+license: Public domain
+copyright: None
+summary: Verify that the baseline STIG settings are configured
+version: 0.0.1

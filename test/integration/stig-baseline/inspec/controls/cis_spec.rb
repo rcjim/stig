@@ -6,7 +6,7 @@
 # attributes
 BLACKLISTED_MODULES = attribute(
   'blacklisted_modules',
-  default: ['cramfs','vfat','cramfs','freevxfs','jffs2','hfs','hfsplus',
+  default: ['cramfs','vfat','freevxfs','jffs2','hfs','hfsplus',
     'squashfs','udf'],
   description: "The modules on the system that we wish to blacklist.")
 
@@ -34,9 +34,6 @@ BLACKLISTED_MODULES.each do |mod|
   describe.one do
     describe command("/sbin/modprobe -n -v #{mod}") do
       its('stdout') { should match /install \/bin\/true/ }
-    end
-    describe command("/sbin/modprobe -n -v #{mod}") do
-      its('stdout') { should match /install \/bin\/false/ }
     end
     describe command('/sbin/modprobe --showconfig | grep blacklist') do
       its('stdout') { should match /#{mod}/ }

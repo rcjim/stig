@@ -8,6 +8,7 @@ _0700_files = [
   '/root/.audit/check_duplicate_uid.sh',
   '/root/.audit/check_groups_in_etc_passwd.sh',
   '/root/.audit/check_duplicate_gid.sh',
+  '/root/.audit/check_duplicate_usernames.sh',
   '/root/.audit/check_duplicate_groupnames.sh',
 ]
 
