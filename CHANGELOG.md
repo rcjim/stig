@@ -13,13 +13,17 @@
 - jmorris@usgs.gov - Centos 6 & 7 now include the stig-baseline tests
 - jmorris@usgs.gov - Moved from Centos 6.8 to Centos 6.9
 
-## [0.6.10] - 2017-07-18
-### Added
-- jmorris@usgs.gov - Added template for /etc/aide.conf and it updates the aide database
-- jmorris@usgs.gov - Added default attributes for Centos 6 & 7 for /etc/aide.conf
-- jmorris@usgs.gov - Added inspec and unit tests for /etc/aide.conf
-### Changed
-- jmorris@usgs.gov - Corrected inspec tests centos7 to run aide tests for redhat platforms
+- 0.6.11
+
+-- [isuftin@usgs.gov] - Due to a change in the Chef client @ 13.7.16, the aide
+recipe needed to be updated. Also updated Rubocop, Chefspec and Foodcritic issues
+
+- 0.6.10
+
+-- [jmorris@usgs.gov] - Added template for /etc/aide.conf and it updates the aide database
+-- [jmorris@usgs.gov] - Added default attributes for Centos 6 & 7 for /etc/aide.conf
+-- [jmorris@usgs.gov] - Added inspec and unit tests for /etc/aide.conf
+-- [jmorris@usgs.gov] - Corrected inspec tests centos7 to run aide tests for redhat platforms
 
 - 0.6.9
 
